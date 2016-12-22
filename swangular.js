@@ -103,6 +103,7 @@
                     }).then(function(setup){
 
                         var scope = options.scope,
+                            component = options.component, // Use component instead of template+controller
                             controller = options.controller,
                             controllerAsOption = options.controllerAs,
                             preConfirm = options.preConfirm;
@@ -111,6 +112,7 @@
                         delete options.htmlTemplate;
                         delete options.resolve;
                         delete options.scope;
+                        delete options.component;
                         delete options.controller;
                         delete options.controllerAs;
                         delete options.preConfirm;
@@ -119,7 +121,10 @@
 
                         options.html = setup.html;
 
-                        if (controller){
+                        if (component) {
+                            scope = scope ? scope.$new() : $rootScope.$new();
+                        }
+                            else if(controller){
 
                             var controllerAs;
                             scope = scope ? scope.$new() : $rootScope.$new();
